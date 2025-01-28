@@ -1,8 +1,17 @@
-'use client'
+'use client';
 import { useState } from 'react';
+import Image from 'next/image';
+
+type Review = {
+  name: string;
+  role: string;
+  date: string;
+  rating: number;
+  comment: string;
+};
 
 function ReviewsSection() {
-  const [reviews, setReviews] = useState([
+  const [reviews, setReviews] = useState<Review[]>([
     {
       name: 'Alex Stanton',
       role: 'CEO at Bukalapak',
@@ -19,7 +28,7 @@ function ReviewsSection() {
     },
   ]);
 
-  const [newReview, setNewReview] = useState({
+  const [newReview, setNewReview] = useState<Review>({
     name: '',
     role: '',
     date: '',
@@ -27,12 +36,12 @@ function ReviewsSection() {
     comment: '',
   });
 
-  const handleInputChange = (e:any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setNewReview({ ...newReview, [name]: value });
   };
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setReviews([...reviews, newReview]);
     setNewReview({ name: '', role: '', date: '', rating: 5, comment: '' });
@@ -45,7 +54,13 @@ function ReviewsSection() {
       {reviews.map((review, index) => (
         <div key={index} className="review mb-8">
           <div className="review-header flex items-center mb-4">
-            <img src={`/prof${index + 1}.svg`} alt={review.name} className="w-16 h-16 rounded-full mr-4" />
+            <Image 
+              src={`/prof${index + 1}.svg`} 
+              alt={review.name} 
+              width={64} 
+              height={64} 
+              className="rounded-full mr-4"
+            />
             <div>
               <h3 className="text-lg font-bold">{review.name}</h3>
               <p className="text-gray-500">{review.role}</p>

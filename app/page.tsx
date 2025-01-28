@@ -1,9 +1,7 @@
 import CarCards from '@/components/CarCards'
-import CarDetailsPage from '@/components/CarDetails'
 import Recomend from '@/components/Cars'
 import Hero from '@/components/Hero'
 import Hero1 from '@/components/Hero1'
-import ReviewsSection from '@/components/ReviewSection'
 import React from 'react'
 
 const page = () => {

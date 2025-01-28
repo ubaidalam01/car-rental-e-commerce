@@ -1,7 +1,7 @@
   import React from 'react';
   import Link from 'next/link';
   import Image from 'next/image';
-  import { FiSearch, FiSettings, FiHeart, FiBell, FiUser } from "react-icons/fi";
+  import { FiSearch, FiSettings, FiHeart, FiBell } from "react-icons/fi";
 
   const Header = () => {
     return (
