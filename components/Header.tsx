@@ -14,7 +14,7 @@
 
           {/* Profile icon for mobile */}
           <button className="text-gray-500 sm:hidden">
-          <Image src="prof.svg" alt="profile" width={44} height={44} />
+          <Image src="/prof.svg" alt="profile" width={44} height={44} />
           </button>
         </div>
 
