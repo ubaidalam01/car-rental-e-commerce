@@ -43,7 +43,7 @@
             <FiSettings size={32} />
           </button>
           <button className="text-gray-500">
-          <Image src="/prof.svg" alt="profile" width={44} height={44} />
+          <Image src="/Prof.svg" alt="profile" width={44} height={44} />
           </button>
         </div>
       </div>
