@@ -36,7 +36,7 @@ const Hero1 = () => {
 
       {/* Middle arrows section */}
       <div className="flex justify-center items-center">
-        <Image src="/switch.svg" alt="Switch Icon" width={60} height={40} />
+        <Image src="/Switch.svg" alt="Switch Icon" width={60} height={40} />
       </div>
 
       {/* Right side Drop-Off section */}
