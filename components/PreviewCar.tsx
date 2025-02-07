@@ -15,7 +15,7 @@ const PreviewCar = () => {
     const fetchCars = async () => {
       setIsLoading(true)
       try {
-        const query = `*[_type == "car"][0...4]{
+        const query = `*[_type == "car"][0...6]{
                     _id,
                     name,
                     slug,
@@ -59,51 +59,51 @@ const PreviewCar = () => {
       {cars.length === 0 ? (
         <div className="text-center text-gray-500 mt-8">No cars found matching your search.</div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 place-items-center">
-          {cars.map((car) => (
-            <div key={car._id} className="w-[295px] h-auto rounded-lg overflow-hidden shadow-lg bg-lime p-6">
-              <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-800 p-4">{car.name}</h2>
-                <button><FiHeart/></button>
-              </div>
-              <h2 className="text-[#90A3BF] ml-4">{car.type}</h2>
-              <Image
-                src={car.imageUrl || "/placeholder.svg"}
-                alt={car.name}
-                className="object-cover mt-4 rounded-md"
-                width={295}
-                height={150}
-              />
-              <div className="p-4">
-                <p className="text-[#90A3BF] mb-2">
-                  Brand: <span className="font-bold text-gray-800">{car.brand}</span>
-                </p>
-                <p className="text-[#90A3BF] mb-2">
-                  Transmission: <span className="font-bold text-gray-800">{car.transmission}</span>
-                </p>
-                <p className="text-[#90A3BF] mb-2">
-                  Seating Capacity: <span className="font-bold text-gray-800">{car.seatingCapacity}</span>
-                </p>
-                <p className="text-[#90A3BF] mb-2">
-                  Fuel Capacity: <span className="font-bold text-gray-800">{car.fuelCapacity}</span>
-                </p>
-                <p className="text-[#90A3BF] mb-4">
-                  Tags: <span className="font-bold text-gray-800">{car.tags?.join(", ")}</span>
-                </p>
-                <div className="flex items-center justify-between mt-4 gap-2">
-                  <p className="text-lg font-bold text-gray-800">
-                    ${car.pricePerDay}/<span className="text-[#90A3BF]">day</span>
-                  </p>
-                  <Link href={`/card/${car._id}`}>
-                    <button className="bg-blue-600 text-white w-[116px] h-[44px] rounded-md hover:bg-blue-700 transition">
-                      Rent now
-                    </button>
-                  </Link>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 place-items-center">
+        {cars.map((car:any) => (
+          <div
+            key={car._id}
+            className="w-[295px] h-[350px] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:shadow-xl hover:scale-105 p-6"
+          >
+            <div className="flex justify-between">
+              <h2 className="text-2xl font-bold text-gray-800 p-4">{car.name}</h2>
+              <Image src="/heart.svg" alt="Heart" width={24} height={24} />
+            </div>
+            <h2 className="text-[#90A3BF] ml-4">{car.type}</h2>
+            <Image
+              src={car.imageUrl || "/placeholder.svg"}
+              alt={car.name}
+              className="object-cover mt-4"
+              width={295}
+              height={150}
+            />
+            <div className="mt-2">
+              <div className="flex justify-between">
+                <div className="flex gap-1">
+                  <Image src="/gas.png" alt="Car Specs" width={24} height={24} />
+                  <span>{car.fuelCapacity}</span>
+                </div>
+                <div className="flex gap-1">
+                  <Image src="/Car.png" alt="Car Specs" width={24} height={24} />
+                  <span>{car.transmission}</span>
+                </div>
+                <div className="flex gap-1">
+                  <Image src="/mini.png" alt="Car Specs" width={24} height={24} />
+                  <span>{car.seatingCapacity}</span>
                 </div>
               </div>
+              <div className="flex items-center justify-between mt-4 gap-2">
+                <p className="text-lg font-bold text-gray-800">
+                  ${car.pricePerDay}/<span className="text-[#90A3BF]">day</span>
+                </p>
+                <button className="bg-blue-600 text-white w-[116px] h-[44px] rounded-md hover:bg-blue-700 transition">
+                  <Link href={`/card/${car._id}`}>Rent now</Link>
+                </button>
+              </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
       )}
       <div className='flex items-center justify-center'>
         <button className="bg-blue-600 text-white font-medium w-[150px] h-[44px] rounded-md hover:bg-blue-700 transition mt-6">

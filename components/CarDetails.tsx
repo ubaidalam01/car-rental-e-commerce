@@ -42,7 +42,7 @@ const CarDetailsPage = ({ productId }: { productId: string }) => {
   }
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-white">
       {/* Sidebar - Hidden on Mobile */}
       <Aside />
       {/* Main Content */}

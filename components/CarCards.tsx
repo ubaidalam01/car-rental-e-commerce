@@ -9,7 +9,7 @@ import { Car } from "@/app/types";
 const CarCards = () => {
   const [carCards, setCarCards] = useState<Car[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [error, setError] = useState<string | null>(null); // State for error handling
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -31,12 +31,10 @@ const CarCards = () => {
         `;
         const cars = await sanityClient.fetch(query);
         setCarCards(cars);
-        setError(null); // Clear any previous error if successful
+        setError(null);
       } catch (err) {
         console.error("Error fetching car data:", err);
-        setError(
-          "We encountered a problem while fetching the data. Please try again."
-        );
+        setError("We encountered a problem while fetching the data. Please try again.");
       }
     };
 
@@ -54,13 +52,11 @@ const CarCards = () => {
   if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center bg-white">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4">
-          Failed to load cars
-        </h1>
+        <h1 className="text-2xl font-semibold text-gray-800 mb-4">Failed to load cars</h1>
         <p className="text-gray-600 mb-6">{error}</p>
         <button
           onClick={() => window.location.reload()}
-          className="bg-[#3563E9] text-white px-6 py-2 text-sm font-medium rounded-md border border-[#3563E9] hover:bg-blue-600 hover:border-blue-700 active:bg-blue-700 active:border-blue-800 transition-all duration-200"
+          className="bg-[#3563E9] text-white px-6 py-2 text-sm font-medium rounded-md hover:bg-blue-600 transition"
         >
           Retry
         </button>
@@ -77,157 +73,76 @@ const CarCards = () => {
   }
 
   return (
-    <div className="bg-[#FFFFFF]">
-      {/* Mobile View */}
-      <div className="relative block sm:hidden">
-        <div className="flex justify-center items-center space-x-6">
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 z-10 bg-gray-300 text-white p-2 rounded-full shadow-md hover:bg-gray-400"
-          >
-            &#10094;
-          </button>
+    <div className="bg-white p-4">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-[#90A3BF] text-3xl font-bold">Popular Cars</h1>
+        <h1 className="text-[#3563E9] font-bold cursor-pointer">View all</h1>
+      </div>
+      <div className="relative flex overflow-hidden">
+        <button
+          onClick={prevSlide}
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2 rounded-full shadow-md hover:bg-gray-400 sm:hidden"
+        >
+          &#10094;
+        </button>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center w-full transition-transform duration-500">
           {carCards.map((car, index) => (
             <div
               key={car._id}
-              className={`w-[295px] h-auto rounded-lg overflow-hidden shadow-lg p-6 transition-transform duration-500 hover:shadow-xl hover:scale-105 ${
-                index === currentSlide ? "block" : "hidden"
+              className={`w-full max-w-[295px] rounded-lg overflow-hidden shadow-lg  bg-white p-6 transition-transform duration-300 hover:shadow-xl hover:scale-105 ${
+                index === currentSlide ? "block" : "hidden sm:block"
               }`}
             >
               <div className="flex justify-between">
-                <h2 className="text-2xl font-bold text-gray-800 p-4">
-                  {car.name}
-                </h2>
-                <Image src="/heart.svg" alt="Heart Icon" width={24} height={24} />
-              </div>
-              <h2 className="text-[#90A3BF] ml-4">{car.brand}</h2>
-              <Image
-                src={car.imageUrl}
-                alt="Car"
-                className="object-cover mt-4"
-                width={295}
-                height={200}
-              />
-              <div className="p-4">
-                <p className="text-[#90A3BF] mb-2">
-                  Brand:{" "}
-                  <span className="font-bold text-gray-800">{car.brand}</span>
-                </p>
-                <p className="text-[#90A3BF] mb-2">
-                  Transmission:{" "}
-                  <span className="font-bold text-gray-800">
-                    {car.transmission}
-                  </span>
-                </p>
-                <p className="text-[#90A3BF] mb-2">
-                  Seating Capacity:{" "}
-                  <span className="font-bold text-gray-800">
-                    {car.seatingCapacity} seats
-                  </span>
-                </p>
-                <p className="text-[#90A3BF] mb-2">
-                  Fuel Capacity:{" "}
-                  <span className="font-bold text-gray-800">
-                    {car.fuelCapacity}L
-                  </span>
-                </p>
-                <p className="text-[#90A3BF] mb-4">
-                  Tags:{" "}
-                  <span className="font-bold text-gray-800">
-                    {car.tags?.join(", ")}
-                  </span>
-                </p>
-                <div className="flex items-center justify-between mt-4 gap-2">
-                  <p className="text-lg font-bold">${car.pricePerDay}/day</p>
-                  <button className="bg-blue-600 text-white w-[116px] h-[44px] rounded-md hover:bg-blue-700 transition">
-                    <Link href={`/card/${car._id}`}>Rent now</Link>
-                  </button>
+                  <h2 className="text-2xl font-bold text-gray-800 p-4">{car.name}</h2>
+                  <Image src="/heart.svg" alt="Heart" width={24} height={24} /> 
                 </div>
-              </div>
-            </div>
-          ))}
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 z-10 bg-gray-300 text-white p-2 rounded-full shadow-md hover:bg-gray-400"
-          >
-            &#10095;
-          </button>
-        </div>
-      </div>
-
-      {/* Desktop View */}
-      <div className="hidden sm:block p-4">
-        <h1 className="text-[#90A3BF] text-3xl font-bold text-start">
-          Popular Cars
-        </h1>
-        <h1 className="text-[#3563E9] text-end font-bold">View all</h1>
-        <div className="flex space-x-6">
-          {carCards.map((car) => (
-            <div
-              key={car._id}
-              className="w-[295px] rounded-lg overflow-hidden shadow-lg bg-lime p-6 transition-transform duration-300 hover:shadow-xl hover:scale-105"
-            >
-              <div className="flex justify-between">
-                <h2 className="text-2xl font-bold text-gray-800 p-4">
-                  {car.name}
-                </h2>
-                <Image src="/heart.svg" alt="Heart" width={24} height={24} />
-              </div>
-              <h2 className="text-[#90A3BF] ml-4">{car.brand}</h2>
-              <Image
-                src={car.imageUrl}
-                alt="Car"
-                className="object-cover mt-4"
-                width={295}
-                height={200}
-              />
-              <div className="p-4">
-                <p className="text-[#90A3BF] mb-2">
-                  Brand:{" "}
-                  <span className="font-bold text-gray-800">{car.brand}</span>
-                </p>
-                <p className="text-[#90A3BF] mb-2">
-                  Transmission:{" "}
-                  <span className="font-bold text-gray-800">
-                    {car.transmission}
-                  </span>
-                </p>
-                <p className="text-[#90A3BF] mb-2">
-                  Seating Capacity:{" "}
-                  <span className="font-bold text-gray-800">
-                    {car.seatingCapacity}
-                  </span>
-                </p>
-                <p className="text-[#90A3BF] mb-2">
-                  Fuel Capacity:{" "}
-                  <span className="font-bold text-gray-800">
-                    {car.fuelCapacity}
-                  </span>
-                </p>
-                <p className="text-[#90A3BF] mb-4">
-                  Tags:{" "}
-                  <span className="font-bold text-gray-800">
-                    {car.tags?.join(", ")}
-                  </span>
-                </p>
-                <div className="flex items-center justify-between mt-4 gap-2">
-                  <p className="text-lg font-bold text-gray-800">
-                    ${car.pricePerDay}/
-                    <span className="text-[#90A3BF]">day</span>
-                  </p>
-                  <Link href={`/card/${car._id}`}>
+                <h2 className="text-[#90A3BF] ml-4">{car.type}</h2>
+                <Image
+                  src={car.imageUrl || "/placeholder.svg"}
+                  alt={car.name}
+                  className="object-cover mt-4"
+                  width={295}
+                  height={150}
+                />
+                <div className="mt-2">
+                  <div className="flex justify-between">
+                    <div className="flex gap-1">
+                      <Image src="/gas.png" alt="Car Specs" width={24} height={24} />
+                      <span>{car.fuelCapacity}</span>
+                    </div>
+                    <div className="flex gap-1">
+                      <Image src="/Car.png" alt="Car Specs" width={24} height={24} />
+                      <span>{car.transmission}</span>
+                    </div>
+                    <div className="flex gap-1">
+                      <Image src="/mini.png" alt="Car Specs" width={24} height={24} />
+                      <span>{car.seatingCapacity}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mt-4 gap-2">
+                    <p className="text-lg font-bold text-gray-800">
+                      ${car.pricePerDay}/<span className="text-[#90A3BF]">day</span>
+                    </p>
                     <button className="bg-blue-600 text-white w-[116px] h-[44px] rounded-md hover:bg-blue-700 transition">
-                      Rent now
+                      <Link href={`/card/${car._id}`}>Rent now</Link>
                     </button>
-                  </Link>
+                  </div>
                 </div>
-              </div>
             </div>
           ))}
         </div>
+        <button
+          onClick={nextSlide}
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2 rounded-full shadow-md hover:bg-gray-400 sm:hidden"
+        >
+          &#10095;
+        </button>
       </div>
     </div>
   );
 };
 
 export default CarCards;
+
+
