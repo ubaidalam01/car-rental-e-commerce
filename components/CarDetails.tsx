@@ -38,7 +38,7 @@ const CarDetailsPage = ({ productId }: { productId: string }) => {
   }, [productId]);
 
   if (!productDetails) {
-    return <p>Loading product details...</p>;
+    return <p className="text-black">Loading product details...</p>;
   }
 
   return (
@@ -121,25 +121,24 @@ const CarDetailsPage = ({ productId }: { productId: string }) => {
                 </p>
               </div>
               <button className="bg-blue-600 text-white px-6 py-2 rounded-md">
-  <Link
-    href={{
-      pathname: "/Payment",
-      query: {
-        name: productDetails.name,
-        type: productDetails.type,
-        transmission: productDetails.transmission,
-        seatingCapacity: productDetails.seatingCapacity,
-        fuelCapacity: productDetails.fuelCapacity,
-        briefDesc: productDetails.briefDesc,
-        pricePerDay: productDetails.pricePerDay,
-        imageUrl: productDetails.imageUrl,
-      },
-    }}
-  >
-    Rent Now
-  </Link>
-</button>
-
+                <Link
+                  href={{
+                    pathname: "/Payment",
+                    query: {
+                      name: productDetails.name,
+                      type: productDetails.type,
+                      transmission: productDetails.transmission,
+                      seatingCapacity: productDetails.seatingCapacity,
+                      fuelCapacity: productDetails.fuelCapacity,
+                      briefDesc: productDetails.briefDesc,
+                      pricePerDay: productDetails.pricePerDay,
+                      imageUrl: productDetails.imageUrl,
+                    },
+                  }}
+                >
+                  Rent Now
+                </Link>
+              </button>
             </div>
           </div>
         </div>

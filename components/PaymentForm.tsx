@@ -20,18 +20,33 @@ const sanitize = (input: string) => {
 };
 
 const schema = z.object({
-  name: z.string().min(1, { message: "Name is required" }).regex(/^[a-zA-Z\s]+$/, { message: "Only letters allowed" }),
-  phone: z.string().min(10, { message: "Phone must be at least 10 digits" }).regex(/^\d+$/, { message: "Only numbers allowed" }),
+  name: z
+    .string()
+    .min(1, { message: "Name is required" })
+    .regex(/^[a-zA-Z\s]+$/, { message: "Only letters allowed" }),
+  phone: z
+    .string()
+    .min(10, { message: "Phone must be at least 10 digits" })
+    .regex(/^\d+$/, { message: "Only numbers allowed" }),
   address: z.string().min(1, { message: "Address is required" }),
   city: z.string().min(1, { message: "City is required" }),
   pickupLocation: z.string().min(1, { message: "Pickup location is required" }),
   pickupDate: z.string().min(1, { message: "Pickup date is required" }),
   returnLocation: z.string().min(1, { message: "Return location is required" }),
   returnDate: z.string().min(1, { message: "Return date is required" }),
-  cardNumber: z.string().length(16, { message: "Card number must be 16 digits" }).regex(/^\d+$/, { message: "Invalid card number" }),
+  cardNumber: z
+    .string()
+    .length(16, { message: "Card number must be 16 digits" })
+    .regex(/^\d+$/, { message: "Invalid card number" }),
   expirationDate: z.string().min(1, { message: "Expiration date is required" }),
-  cardHolder: z.string().min(1, { message: "Card holder is required" }).regex(/^[a-zA-Z\s]+$/, { message: "Only letters allowed" }),
-  cvc: z.string().length(3, { message: "CVC must be 3 digits" }).regex(/^\d+$/, { message: "Invalid CVC" }),
+  cardHolder: z
+    .string()
+    .min(1, { message: "Card holder is required" })
+    .regex(/^[a-zA-Z\s]+$/, { message: "Only letters allowed" }),
+  cvc: z
+    .string()
+    .length(3, { message: "CVC must be 3 digits" })
+    .regex(/^\d+$/, { message: "Invalid CVC" }),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -87,18 +102,43 @@ const Payment = () => {
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-between gap-8 px-4 py-6 bg-gray-100">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col justify-between gap-8 px-4 py-6 bg-gray-100"
+        >
           {/* Billing Info Section */}
           <div className="flex flex-col-reverse md:flex-row gap-2">
             <div className="w-full md:w-2/3 bg-white p-6 rounded-md shadow-md">
-              <h2 className="text-xl font-bold mb-4 text-black">Billing Info</h2>
+              <h2 className="text-xl font-bold mb-4 text-black">
+                Billing Info
+              </h2>
               <h2 className="text-[#90A3BF]">Please enter your billing info</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { label: "Name", field: "name", type: "text", placeholder: "Your Name" },
-                  { label: "Phone Number", field: "phone", type: "text", placeholder: "Your Phone" },
-                  { label: "Address", field: "address", type: "text", placeholder: "Your Address" },
-                  { label: "City", field: "city", type: "text", placeholder: "City" },
+                  {
+                    label: "Name",
+                    field: "name",
+                    type: "text",
+                    placeholder: "Your Name",
+                  },
+                  {
+                    label: "Phone Number",
+                    field: "phone",
+                    type: "text",
+                    placeholder: "Your Phone",
+                  },
+                  {
+                    label: "Address",
+                    field: "address",
+                    type: "text",
+                    placeholder: "Your Address",
+                  },
+                  {
+                    label: "City",
+                    field: "city",
+                    type: "text",
+                    placeholder: "City",
+                  },
                 ].map(({ label, field, type, placeholder }) => (
                   <div key={field}>
                     <label className="block text-black mb-1">{label}</label>
@@ -109,7 +149,9 @@ const Payment = () => {
                       placeholder={placeholder}
                     />
                     {errors[field as keyof FormData] && (
-                      <p className="text-red-500">{errors[field as keyof FormData]?.message}</p>
+                      <p className="text-red-500">
+                        {errors[field as keyof FormData]?.message}
+                      </p>
                     )}
                   </div>
                 ))}
@@ -118,7 +160,9 @@ const Payment = () => {
 
             {/* Rental Summary Section */}
             <div className="w-full md:w-1/3 bg-white p-6 rounded-md shadow-md">
-              <h2 className="text-xl font-bold mb-4 text-black">Rental Summary</h2>
+              <h2 className="text-xl font-bold mb-4 text-black">
+                Rental Summary
+              </h2>
               <div className="flex items-center gap-4">
                 <Image
                   src={imageUrl || "/placeholder.svg"}
@@ -147,14 +191,18 @@ const Payment = () => {
                     className="w-[295px] h-[40px] bg-[#F6F7F9] rounded-lg rounded-r-none"
                     placeholder="Apply promo code"
                   />
-                  <button className="bg-[#F6F7F9] rounded-lg h-[40px] text-black">Apply Now</button>
+                  <button className="bg-[#F6F7F9] rounded-lg h-[40px] text-black">
+                    Apply Now
+                  </button>
                 </div>
                 <div className="flex justify-between mt-4 text-lg font-bold">
                   <p className="text-xl text-black">Total Rental Price:</p>
                   <p className="text-black">${pricePerDay}</p>
                 </div>
               </div>
-              <p className="text-gray-500">Overall price includes rental discount</p>
+              <p className="text-gray-500">
+                Overall price includes rental discount
+              </p>
             </div>
           </div>
 
@@ -162,10 +210,28 @@ const Payment = () => {
           <div className="w-full md:w-2/3 bg-white p-6 rounded-md shadow-md">
             <h2 className="text-xl font-bold mb-4 text-black">Rental Info</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input {...register("pickupLocation")} type="text" placeholder="Enter Pickup Location" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black" />
-              <input {...register("pickupDate")} type="date" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black" />
-              <input {...register("returnLocation")} type="text" placeholder="Enter Return Location" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black" />
-              <input {...register("returnDate")} type="date" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black" />
+              <input
+                {...register("pickupLocation")}
+                type="text"
+                placeholder="Enter Pickup Location"
+                className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black"
+              />
+              <input
+                {...register("pickupDate")}
+                type="date"
+                className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black"
+              />
+              <input
+                {...register("returnLocation")}
+                type="text"
+                placeholder="Enter Return Location"
+                className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black"
+              />
+              <input
+                {...register("returnDate")}
+                type="date"
+                className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black"
+              />
             </div>
           </div>
 
@@ -174,9 +240,21 @@ const Payment = () => {
             <h2 className="text-lg font-bold text-black">Payment Method</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { label: "Card Number", field: "cardNumber", placeholder: "1234 5678 9012 3456" },
-                { label: "Expiration Date", field: "expirationDate", placeholder: "MM/YY" },
-                { label: "Card Holder", field: "cardHolder", placeholder: "Full Name" },
+                {
+                  label: "Card Number",
+                  field: "cardNumber",
+                  placeholder: "1234 5678 9012 3456",
+                },
+                {
+                  label: "Expiration Date",
+                  field: "expirationDate",
+                  placeholder: "MM/YY",
+                },
+                {
+                  label: "Card Holder",
+                  field: "cardHolder",
+                  placeholder: "Full Name",
+                },
                 { label: "CVC", field: "cvc", placeholder: "123" },
               ].map(({ label, field, placeholder }) => (
                 <div key={field}>
@@ -188,14 +266,19 @@ const Payment = () => {
                     placeholder={placeholder}
                   />
                   {errors[field as keyof FormData] && (
-                    <p className="text-red-500">{errors[field as keyof FormData]?.message}</p>
+                    <p className="text-red-500">
+                      {errors[field as keyof FormData]?.message}
+                    </p>
                   )}
                 </div>
               ))}
             </div>
           </div>
 
-          <button type="submit" className="bg-blue-500 text-white py-3 px-6 rounded-lg">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-3 px-6 rounded-lg"
+          >
             Rent now
           </button>
         </form>
