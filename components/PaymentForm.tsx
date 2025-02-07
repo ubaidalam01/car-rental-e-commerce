@@ -94,9 +94,9 @@ const Payment = () => {
 
       {isSubmitted ? (
         <div className="text-center py-4">
-          <h2 className="text-xl font-bold">Thank you for your payment!</h2>
-          <p>You have rented: {name}</p>
-          <p>Total payment: ${pricePerDay}</p>
+          <h2 className="text-xl font-bold text-black">Thank you for your payment!</h2>
+          <p className="text-black">You have rented: {name}</p>
+          <p className="text-black">Total payment: ${pricePerDay}</p>
           <button className="bg-blue-600 text-white font-medium w-[190px] h-[44px] rounded-md hover:bg-blue-700 transition mt-3">
             <Link href="/">Go Back to Home Page</Link>
           </button>
