@@ -5,7 +5,7 @@ import Link from 'next/link';
 const Hero = () => {
   return (
     <div className='min-w-full flex justify-center mt-4 bg-white'>
-      <div className='flex flex-col sm:flex-row gap-5'>
+      <div className='flex flex-col sm:flex-row gap-5 bg-white'>
         {/* Left image */}
         <div className='w-[327px] h-[232px] sm:w-[640px] sm:h-[360px] bg-gradient-to-br from-[#54A6FF] to-[#2C82FF] rounded-[10px] relative overflow-hidden p-6 sm:p-8'>
           {/* Text Content */}

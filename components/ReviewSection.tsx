@@ -82,7 +82,7 @@ function ReviewsSection() {
             placeholder="Name" 
             value={newReview.name} 
             onChange={handleInputChange} 
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border border-gray-300 rounded text-black"
           />
         </div>
         <div className="mb-4">
@@ -92,7 +92,7 @@ function ReviewsSection() {
             placeholder="Role" 
             value={newReview.role} 
             onChange={handleInputChange} 
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border border-gray-300 rounded text-black"
           />
         </div>
         <div className="mb-4">
@@ -101,7 +101,7 @@ function ReviewsSection() {
             name="date" 
             value={newReview.date} 
             onChange={handleInputChange} 
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border border-gray-300 rounded text-black"
           />
         </div>
         <div className="mb-4">
@@ -110,7 +110,7 @@ function ReviewsSection() {
             placeholder="Comment" 
             value={newReview.comment} 
             onChange={handleInputChange} 
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border border-gray-300 rounded text-black"
           />
         </div>
         <div className="mb-4">

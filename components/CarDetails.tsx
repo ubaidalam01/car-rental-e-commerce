@@ -84,7 +84,7 @@ const CarDetailsPage = ({ productId }: { productId: string }) => {
 
           {/* Car Details Section */}
           <div className="w-full lg:w-1/2 bg-white p-6 rounded-lg shadow-lg mb-8">
-            <h3 className="flex justify-between text-[28px] md:text-[40px] font-bold">
+            <h3 className="flex justify-between text-[28px] text-black md:text-[40px] font-bold">
               {productDetails.name}{" "}
               <Image src="/heart.svg" alt="Heart Icon" width={24} height={24} />
             </h3>

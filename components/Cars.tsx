@@ -120,15 +120,15 @@
                   <div className="flex justify-between">
                     <div className="flex gap-1">
                       <Image src="/gas.png" alt="Car Specs" width={24} height={24} />
-                      <span>{car.fuelCapacity}</span>
+                      <span className="text-black">{car.fuelCapacity}</span>
                     </div>
                     <div className="flex gap-1">
                       <Image src="/Car.png" alt="Car Specs" width={24} height={24} />
-                      <span>{car.transmission}</span>
+                      <span className="text-black">{car.transmission}</span>
                     </div>
                     <div className="flex gap-1">
                       <Image src="/mini.png" alt="Car Specs" width={24} height={24} />
-                      <span>{car.seatingCapacity}</span>
+                      <span className="text-black">{car.seatingCapacity}</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-between mt-4 gap-2">

@@ -91,7 +91,7 @@ const Payment = () => {
           {/* Billing Info Section */}
           <div className="flex flex-col-reverse md:flex-row gap-2">
             <div className="w-full md:w-2/3 bg-white p-6 rounded-md shadow-md">
-              <h2 className="text-xl font-bold mb-4">Billing Info</h2>
+              <h2 className="text-xl font-bold mb-4 text-black">Billing Info</h2>
               <h2 className="text-[#90A3BF]">Please enter your billing info</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
@@ -105,7 +105,7 @@ const Payment = () => {
                     <input
                       {...register(field as keyof FormData)}
                       type={type}
-                      className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md"
+                      className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black"
                       placeholder={placeholder}
                     />
                     {errors[field as keyof FormData] && (
@@ -118,7 +118,7 @@ const Payment = () => {
 
             {/* Rental Summary Section */}
             <div className="w-full md:w-1/3 bg-white p-6 rounded-md shadow-md">
-              <h2 className="text-xl font-bold mb-4">Rental Summary</h2>
+              <h2 className="text-xl font-bold mb-4 text-black">Rental Summary</h2>
               <div className="flex items-center gap-4">
                 <Image
                   src={imageUrl || "/placeholder.svg"}
@@ -128,18 +128,18 @@ const Payment = () => {
                   height={80}
                 />
                 <div>
-                  <h3 className="text-lg font-bold">{name}</h3>
+                  <h3 className="text-lg font-bold text-black">{name}</h3>
                   <p className="text-gray-500 text-sm">{type}</p>
                 </div>
               </div>
               <div className="mt-4">
                 <div className="flex justify-between">
                   <p className="text-gray-600">Subtotal:</p>
-                  <p className="font-bold">${pricePerDay}</p>
+                  <p className="font-bold text-black">${pricePerDay}</p>
                 </div>
                 <div className="flex justify-between mt-2">
-                  <p className="text-gray-600">Tax:</p>
-                  <p className="font-bold">$0.00</p>
+                  <p className="text-black">Tax:</p>
+                  <p className="font-bold text-black">$0.00</p>
                 </div>
                 <div className="flex">
                   <input
@@ -147,11 +147,11 @@ const Payment = () => {
                     className="w-[295px] h-[40px] bg-[#F6F7F9] rounded-lg rounded-r-none"
                     placeholder="Apply promo code"
                   />
-                  <button className="bg-[#F6F7F9] rounded-lg h-[40px]">Apply Now</button>
+                  <button className="bg-[#F6F7F9] rounded-lg h-[40px] text-black">Apply Now</button>
                 </div>
                 <div className="flex justify-between mt-4 text-lg font-bold">
-                  <p className="text-xl">Total Rental Price:</p>
-                  <p>${pricePerDay}</p>
+                  <p className="text-xl text-black">Total Rental Price:</p>
+                  <p className="text-black">${pricePerDay}</p>
                 </div>
               </div>
               <p className="text-gray-500">Overall price includes rental discount</p>
@@ -160,18 +160,18 @@ const Payment = () => {
 
           {/* Rental Info Section */}
           <div className="w-full md:w-2/3 bg-white p-6 rounded-md shadow-md">
-            <h2 className="text-xl font-bold mb-4">Rental Info</h2>
+            <h2 className="text-xl font-bold mb-4 text-black">Rental Info</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input {...register("pickupLocation")} type="text" placeholder="Enter Pickup Location" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md" />
-              <input {...register("pickupDate")} type="date" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md" />
-              <input {...register("returnLocation")} type="text" placeholder="Enter Return Location" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md" />
-              <input {...register("returnDate")} type="date" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md" />
+              <input {...register("pickupLocation")} type="text" placeholder="Enter Pickup Location" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black" />
+              <input {...register("pickupDate")} type="date" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black" />
+              <input {...register("returnLocation")} type="text" placeholder="Enter Return Location" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black" />
+              <input {...register("returnDate")} type="date" className="w-full h-[56px] bg-[#F6F7F9] p-2 rounded-md text-black" />
             </div>
           </div>
 
           {/* Payment Method Section */}
           <div className="w-full md:w-2/3 bg-white p-6 rounded-md shadow-md">
-            <h2 className="text-lg font-bold">Payment Method</h2>
+            <h2 className="text-lg font-bold text-black">Payment Method</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { label: "Card Number", field: "cardNumber", placeholder: "1234 5678 9012 3456" },
@@ -184,7 +184,7 @@ const Payment = () => {
                   <input
                     {...register(field as keyof FormData)}
                     type="text"
-                    className="w-full p-2 h-[56px] rounded-md"
+                    className="w-full p-2 h-[56px] rounded-md text-black"
                     placeholder={placeholder}
                   />
                   {errors[field as keyof FormData] && (
