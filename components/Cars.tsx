@@ -4,7 +4,7 @@
   import Image from "next/image"
   import Link from "next/link"
   import type { Car } from "@/app/types"
-  import { FiSearch, FiHeart } from "react-icons/fi"
+  import { FiSearch } from "react-icons/fi"
   
   const Recomend = () => {
     const [cars, setCars] = useState<Car[]>([])
@@ -52,10 +52,13 @@
     )
   
     if (isLoading) {
-      return  <div className="flex justify-center items-center h-screen">
-          <p className="text-gray-600 text-lg font-semibold">Loading cars...</p>
+      return (
+        <div className="flex justify-center items-center h-screen">
+          <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
         </div>
+      )
     }
+    
   
     if (hasError) {
       return (

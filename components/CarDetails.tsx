@@ -1,15 +1,16 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import sanityClient from "@/sanityClient";
-import type { CarDetails } from "@/app/CarDetails";
-import Link from "next/link";
-import PreviewCar from "./PreviewCar";
-import ReviewsSection from "./ReviewSection";
-import Aside from "./Aside";
+"use client"
+import { useEffect, useState } from "react"
+import Image from "next/image"
+import sanityClient from "@/sanityClient"
+import type { CarDetails } from "@/app/CarDetails"
+import Link from "next/link"
+import PreviewCar from "./PreviewCar"
+import ReviewsSection from "./ReviewSection"
+import Aside from "./Aside"
 
 const CarDetailsPage = ({ productId }: { productId: string }) => {
-  const [productDetails, setProductDetails] = useState<CarDetails | null>(null);
+  const [productDetails, setProductDetails] = useState<CarDetails | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -24,21 +25,31 @@ const CarDetailsPage = ({ productId }: { productId: string }) => {
           pricePerDay,
           "imageUrl": image.asset->url
         }
-      `;
+      `
 
       try {
-        const result = await sanityClient.fetch(query, { productId });
-        setProductDetails(result);
+        const result = await sanityClient.fetch(query, { productId })
+        setProductDetails(result)
       } catch (error) {
-        console.error("Error fetching product details:", error);
+        console.error("Error fetching product details:", error)
+      } finally {
+        setIsLoading(false)
       }
-    };
+    }
 
-    fetchProductDetails();
-  }, [productId]);
+    fetchProductDetails()
+  }, [productId])
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+      </div>
+    )
+  }
 
   if (!productDetails) {
-    return <p className="text-black">Loading product details...</p>;
+    return <div>Error loading product details.</div>
   }
 
   return (
@@ -85,13 +96,10 @@ const CarDetailsPage = ({ productId }: { productId: string }) => {
           {/* Car Details Section */}
           <div className="w-full lg:w-1/2 bg-white p-6 rounded-lg shadow-lg mb-8">
             <h3 className="flex justify-between text-[28px] text-black md:text-[40px] font-bold">
-              {productDetails.name}{" "}
-              <Image src="/heart.svg" alt="Heart Icon" width={24} height={24} />
+              {productDetails.name} <Image src="/heart.svg" alt="Heart Icon" width={24} height={24} />
             </h3>
             <p className="text-gray-500 text-sm">⭐⭐⭐⭐⭐ (420+ Reviews)</p>
-            <p className="text-base md:text-xl text-gray-600 mt-2">
-              {productDetails.briefDesc}
-            </p>
+            <p className="text-base md:text-xl text-gray-600 mt-2">{productDetails.briefDesc}</p>
             <div className="flex flex-col md:flex-row mt-4 gap-6">
               <div className="flex flex-col gap-4 md:gap-8">
                 <p className="text-sm md:text-[16px] text-gray-600">
@@ -113,12 +121,9 @@ const CarDetailsPage = ({ productId }: { productId: string }) => {
             <div className="mt-6 flex flex-col md:flex-row items-center justify-between gap-4">
               <div>
                 <p className="text-base md:text-lg font-bold text-black">
-                  ${productDetails.pricePerDay}/
-                  <span className="text-[#90A3BF] text-sm">day</span>
+                  ${productDetails.pricePerDay}/<span className="text-[#90A3BF] text-sm">day</span>
                 </p>
-                <p className="text-xs md:text-sm text-[#90A3BF] line-through">
-                  ${productDetails.pricePerDay}
-                </p>
+                <p className="text-xs md:text-sm text-[#90A3BF] line-through">${productDetails.pricePerDay}</p>
               </div>
               <button className="bg-blue-600 text-white px-6 py-2 rounded-md">
                 <Link
@@ -154,7 +159,8 @@ const CarDetailsPage = ({ productId }: { productId: string }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CarDetailsPage;
+export default CarDetailsPage
+

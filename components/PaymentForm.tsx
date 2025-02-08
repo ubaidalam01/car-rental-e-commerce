@@ -1,23 +1,23 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import Image from "next/image";
-import { Suspense, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { createRentalEntry } from "@/utils/sanityApi";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import Image from "next/image"
+import { Suspense, useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { createRentalEntry } from "@/utils/sanityApi"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const sanitize = (input: string) => {
   if (typeof window !== "undefined") {
-    const DOMPurify = require("dompurify");
-    return DOMPurify.sanitize(input);
+    const DOMPurify = require("dompurify")
+    return DOMPurify.sanitize(input)
   }
-  return input;
-};
+  return input
+}
 
 const schema = z.object({
   name: z
@@ -43,31 +43,30 @@ const schema = z.object({
     .string()
     .min(1, { message: "Card holder is required" })
     .regex(/^[a-zA-Z\s]+$/, { message: "Only letters allowed" }),
-  cvc: z
-    .string()
-    .length(3, { message: "CVC must be 3 digits" })
-    .regex(/^\d+$/, { message: "Invalid CVC" }),
-});
+  cvc: z.string().length(3, { message: "CVC must be 3 digits" }).regex(/^\d+$/, { message: "Invalid CVC" }),
+})
 
-type FormData = z.infer<typeof schema>;
+type FormData = z.infer<typeof schema>
 
 const Payment = () => {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  })
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const name = sanitize(searchParams.get("name") || "");
-  const type = sanitize(searchParams.get("type") || "");
-  const pricePerDay = sanitize(searchParams.get("pricePerDay") || "");
-  const imageUrl = sanitize(searchParams.get("imageUrl") || "");
+  const name = sanitize(searchParams.get("name") || "")
+  const type = sanitize(searchParams.get("type") || "")
+  const pricePerDay = sanitize(searchParams.get("pricePerDay") || "")
+  const imageUrl = sanitize(searchParams.get("imageUrl") || "")
 
   const onSubmit = async (data: FormData) => {
+    setIsLoading(true)
     try {
       const rentalData = {
         ...data,
@@ -75,22 +74,30 @@ const Payment = () => {
         carType: type,
         price: pricePerDay,
         imageUrl: imageUrl,
-      };
+      }
 
-      const response = await createRentalEntry(rentalData);
-      console.log("Sanity Response:", response);
-      toast.success("Your payment has been received!");
-      setIsSubmitted(true);
+      const response = await createRentalEntry(rentalData)
+      console.log("Sanity Response:", response)
+      toast.success("Your payment has been received!")
+      setIsSubmitted(true)
     } catch (error) {
-      console.error("Error submitting form:", error);
-      toast.error("Transaction Failed!");
+      console.error("Error submitting form:", error)
+      toast.error("Transaction Failed!")
+    } finally {
+      setIsLoading(false)
     }
-  };
+  }
+
+  const Loader = () => (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+    </div>
+  )
 
   return (
     <>
       {/* ToastContainer is always rendered */}
-      <ToastContainer position="bottom-right" />
+      <ToastContainer position="top-right" />
 
       {isSubmitted ? (
         <div className="text-center py-4">
@@ -102,16 +109,11 @@ const Payment = () => {
           </button>
         </div>
       ) : (
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col justify-between gap-8 px-4 py-6 bg-gray-100"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-between gap-8 px-4 py-6 bg-gray-100">
           {/* Billing Info Section */}
           <div className="flex flex-col-reverse md:flex-row gap-2">
             <div className="w-full md:w-2/3 bg-white p-6 rounded-md shadow-md">
-              <h2 className="text-xl font-bold mb-4 text-black">
-                Billing Info
-              </h2>
+              <h2 className="text-xl font-bold mb-4 text-black">Billing Info</h2>
               <h2 className="text-[#90A3BF]">Please enter your billing info</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
@@ -149,9 +151,7 @@ const Payment = () => {
                       placeholder={placeholder}
                     />
                     {errors[field as keyof FormData] && (
-                      <p className="text-red-500">
-                        {errors[field as keyof FormData]?.message}
-                      </p>
+                      <p className="text-red-500">{errors[field as keyof FormData]?.message}</p>
                     )}
                   </div>
                 ))}
@@ -160,9 +160,7 @@ const Payment = () => {
 
             {/* Rental Summary Section */}
             <div className="w-full md:w-1/3 bg-white p-6 rounded-md shadow-md">
-              <h2 className="text-xl font-bold mb-4 text-black">
-                Rental Summary
-              </h2>
+              <h2 className="text-xl font-bold mb-4 text-black">Rental Summary</h2>
               <div className="flex items-center gap-4">
                 <Image
                   src={imageUrl || "/placeholder.svg"}
@@ -191,21 +189,16 @@ const Payment = () => {
                     className="w-[295px] h-[40px] bg-[#F6F7F9] rounded-lg rounded-r-none"
                     placeholder="Apply promo code"
                   />
-                  <button className="bg-[#F6F7F9] rounded-lg h-[40px] text-black">
-                    Apply Now
-                  </button>
+                  <button className="bg-[#F6F7F9] rounded-lg h-[40px] text-black">Apply Now</button>
                 </div>
                 <div className="flex justify-between mt-4 text-lg font-bold">
                   <p className="text-xl text-black">Total Rental Price:</p>
                   <p className="text-black">${pricePerDay}</p>
                 </div>
               </div>
-              <p className="text-gray-500">
-                Overall price includes rental discount
-              </p>
+              <p className="text-gray-500">Overall price includes rental discount</p>
             </div>
           </div>
-
           {/* Rental Info Section */}
           <div className="w-full md:w-2/3 bg-white p-6 rounded-md shadow-md">
             <h2 className="text-xl font-bold mb-4 text-black">Rental Info</h2>
@@ -266,9 +259,7 @@ const Payment = () => {
                     placeholder={placeholder}
                   />
                   {errors[field as keyof FormData] && (
-                    <p className="text-red-500">
-                      {errors[field as keyof FormData]?.message}
-                    </p>
+                    <p className="text-red-500">{errors[field as keyof FormData]?.message}</p>
                   )}
                 </div>
               ))}
@@ -277,20 +268,23 @@ const Payment = () => {
 
           <button
             type="submit"
-            className="bg-blue-500 text-white py-3 px-6 rounded-lg"
+            className="bg-blue-500 text-white py-3 px-6 rounded-lg disabled:opacity-50"
+            disabled={isLoading}
           >
-            Rent now
+            {isLoading ? "Processing..." : "Rent now"}
           </button>
         </form>
       )}
+      {isLoading && <Loader />}
     </>
-  );
-};
+  )
+}
 
 const PaymentPage = () => (
   <Suspense fallback={<div>Loading payment details...</div>}>
     <Payment />
   </Suspense>
-);
+)
 
-export default PaymentPage;
+export default PaymentPage
+
